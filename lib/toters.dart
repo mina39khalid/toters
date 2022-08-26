@@ -15,15 +15,16 @@ class _mypageState extends State<mypage> {
     'images/img_2.png',
   ];
 
-  String get textS => 'فاير فاير';
-  String get num => '37 - 27';
-  String get mint => 'دقائق';
-  String get img =>
+  final String textS = 'فاير فاير';
+  final String num = '37 - 27';
+  final String mint = 'دقائق';
+  final String img =
       'https://images.pexels.com/photos/2983098/pexels-photo-2983098.jpeg?auto=compress&cs=tinysrgb&w=600';
-  String get points => 'اكتساب نقاط';
-  String get burg => 'برغر.';
-  double get doubleNum => 4.9;
-  String get text2 =>  'نقدم ألذ سندويشات البركر المميزة مع الصلصات ألامريكية والغريبه الخاصه';
+  final String points = 'اكتساب نقاط';
+  final String burg = 'برغر.';
+  final double doubleNum = 4.9;
+  final String text2 =
+      'نقدم ألذ سندويشات البركر المميزة مع الصلصات ألامريكية والغريبه الخاصه';
 
   @override
   Widget build(BuildContext context) {
@@ -168,13 +169,13 @@ class _mypageState extends State<mypage> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => burger(
                                   Images: img,
-                              text1:textS,
-                              Num1: num,
-                              Point: points,
-                              Burg: burg,
-                              Num2:'$doubleNum' ,
-                              text2: text2,
-                              Min: mint,
+                                  text1: textS,
+                                  Num1: num,
+                                  Point: points,
+                                  Burg: burg,
+                                  Num2: '$doubleNum',
+                                  text2: text2,
+                                  Min: mint,
                                 )));
                       },
                       child: Column(
@@ -353,7 +354,7 @@ class _mypageState extends State<mypage> {
                                 height: 13,
                               ),
                               Text(
-                               text2,
+                                text2,
                                 style:
                                     TextStyle(color: Colors.grey, fontSize: 10),
                               )
