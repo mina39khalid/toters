@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled4/toters.dart';
 
-import 'io.dart';
-import 'page39.dart';
+
+
 
 void main() {
   runApp(MaterialApp(home: mypage(),debugShowCheckedModeBanner: false,));
