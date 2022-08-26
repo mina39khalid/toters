@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_images/carousel_images.dart';
 import 'package:untitled4/burger.dart';
 import 'splash.dart';
+import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 
 class mypage extends StatefulWidget {
   @override
@@ -9,6 +10,13 @@ class mypage extends StatefulWidget {
 }
 
 class _mypageState extends State<mypage> {
+  var _selectedTab = _SelectedTab.home;
+
+  void _handleIndexChanged(int i) {
+    setState(() {
+      _selectedTab = _SelectedTab.values[i];
+    });
+  }
   final List<String> listImages = [
     'images/img_4.png',
     'images/img_3.png',
@@ -364,12 +372,53 @@ class _mypageState extends State<mypage> {
                       ),
                     ),
                     SizedBox(
-                      height: 100,
+                      height: 200,
                     )
                   ],
                 )),
               ),
-            ])));
+            ])),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(bottom: 0),
+
+        child: DotNavigationBar(
+
+          currentIndex: _SelectedTab.values.indexOf(_selectedTab),
+          dotIndicatorColor: Colors.white,
+          unselectedItemColor: Colors.grey[300],
+          // enableFloatingNavBar: false,
+          onTap: _handleIndexChanged,
+          items: [
+            /// Home
+            DotNavigationBarItem(
+              icon: Icon(Icons.person_outline_outlined,color: Colors.grey,),
+              selectedColor: Color(0xff73544C),
+            ),
+            /// Home
+            DotNavigationBarItem(
+              icon: Icon(Icons.list_alt_outlined,color: Colors.grey,),
+              selectedColor: Color(0xff73544C),
+            ),
+
+            /// Likes
+            DotNavigationBarItem(
+              icon: Icon(Icons.ac_unit,color: Colors.grey,),
+              selectedColor: Colors.grey,
+            ),
+            DotNavigationBarItem(
+              icon: Icon(Icons.search,color: Colors.grey,),
+              selectedColor: Colors.grey,
+            ),
+
+            /// Search
+            DotNavigationBarItem(
+              icon: Icon(Icons.home,color: Colors.greenAccent,),
+              selectedColor: Colors.red,
+            ),
+
+          ],
+        ),
+      ),);
   }
 
   Container box(String pic, String text) {
@@ -406,3 +455,4 @@ class _mypageState extends State<mypage> {
     );
   }
 }
+enum _SelectedTab { home,search ,explor ,favorite, person }
