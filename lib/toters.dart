@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_images/carousel_images.dart';
 import 'package:untitled4/burger.dart';
+import 'page22.dart';
+import 'pagehome.dart';
 import 'splash.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
-
+import 'search.dart';
+import 'profile.dart';
 class mypage extends StatefulWidget {
   @override
   State<mypage> createState() => _mypageState();
@@ -391,22 +394,34 @@ class _mypageState extends State<mypage> {
           items: [
             /// Home
             DotNavigationBarItem(
-              icon: Icon(Icons.person_outline_outlined,color: Colors.grey,),
+              icon: GestureDetector( onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> profilepage()));
+              },
+                  child: Icon(Icons.person_outline,color: Colors.grey,)),
               selectedColor: Color(0xff73544C),
             ),
             /// Home
             DotNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined,color: Colors.grey,),
+              icon:GestureDetector( onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> HomePage()));
+              },
+                  child: Icon(Icons.list_alt_outlined,color: Colors.grey)),
               selectedColor: Color(0xff73544C),
             ),
 
             /// Likes
             DotNavigationBarItem(
-              icon: Icon(Icons.ac_unit,color: Colors.grey,),
+              icon:GestureDetector( onTap: (){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> pagee()));
+    },
+    child: Icon(Icons.ac_unit_outlined,color: Colors.grey)),
               selectedColor: Colors.grey,
             ),
             DotNavigationBarItem(
-              icon: Icon(Icons.search,color: Colors.grey,),
+              icon:GestureDetector( onTap: (){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> searchpage()));
+    },
+        child: Icon(Icons.search,color: Colors.grey,)),
               selectedColor: Colors.grey,
             ),
 

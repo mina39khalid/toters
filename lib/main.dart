@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:untitled4/search.dart';
 import 'package:untitled4/toters.dart';
-
+import 'page22.dart';
+import 'pagehome.dart';
+import 'profile.dart';
+import 'splash.dart';
 
 
 
 void main() {
-  runApp(MaterialApp(home: mypage(),debugShowCheckedModeBanner: false,));
+  runApp(MaterialApp(home: pagee(),debugShowCheckedModeBanner: false,));
 }
 
 class MyApp extends StatelessWidget {
