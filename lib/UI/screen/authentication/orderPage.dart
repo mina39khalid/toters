@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart';
+
+var imgo=[""];
+var nameo=[""];
+var costo=[""];
+
 class order extends StatefulWidget {
   const order({Key? key}) : super(key: key);
 
@@ -11,6 +18,34 @@ class _orderState extends State<order> {
   bool checed2 = false;
   int count = 1;
   int counts = 2000 ;
+  Future getData() async{
+    var url=Uri.parse("http://localhost:4000/order");
+    Response response= await get(url);
+
+    String body =response.body;
+
+    List<dynamic> list1=json.decode(body);
+
+    imgo.clear();
+    nameo.clear();
+    costo.clear();
+
+    for (int i=0; i<list1.length; i++){
+      setState(() {
+
+        nameo.add("${list1[i]["nameo"]}");
+        costo.add("${list1[i]["costo"]}");
+        imgo.add("${list1[i]["imgo"]}");
+
+      });
+      print(list1);
+    }
+  }
+  void initState(){
+    super.initState();
+    getData();
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,16 +78,21 @@ class _orderState extends State<order> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                        image:  NetworkImage('https://images.pexels.com/photos/1301373/pexels-photo-1301373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+                        image:  NetworkImage(imgo[0])
                     )
                 ),),
               Row( mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Column(
                     children: [
-                      Text('فنكر',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                      Text(nameo[0],style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                       SizedBox(height: 8,),
-                      Text('2000 د.ع',style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
+                      Row(
+                        children: [
+                          Text('د.ع',style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
+                          Text(costo[0],style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
+                        ],
+                      ),
                       SizedBox(height: 8,) ],
                   ),
                 ],

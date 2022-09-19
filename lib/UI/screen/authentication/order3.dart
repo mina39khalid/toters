@@ -6,18 +6,18 @@ var imgo=[""];
 var nameo=[""];
 var costo=[""];
 
-class order2 extends StatefulWidget {
-  const order2({Key? key}) : super(key: key);
+class order3 extends StatefulWidget {
+  const order3({Key? key}) : super(key: key);
 
   @override
-  State<order2> createState() => _order2State();
+  State<order3> createState() => _order3State();
 }
 
-class _order2State extends State<order2> {
+class _order3State extends State<order3> {
   bool checed = false;
   bool checed2 = false;
   int count = 1;
-  int counts = 10000 ;
+  int counts = 2000 ;
   Future getData() async{
     var url=Uri.parse("http://localhost:4000/order");
     Response response= await get(url);
@@ -78,18 +78,18 @@ class _order2State extends State<order2> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image:  NetworkImage(imgo[1])
+                        image:  NetworkImage(imgo[2])
                     )
                 ),),
               Row( mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Column(
                     children: [
-                      Text(nameo[1],style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                      Text(nameo[2],style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                       SizedBox(height: 8,),
                       Row(
                         children: [
-                          Text(costo[1],style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
+                          Text(costo[2],style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
                           Text(' د.ع',style: TextStyle(fontSize: 15,color: Colors.greenAccent),),
                         ],
                       ),
@@ -108,7 +108,7 @@ class _order2State extends State<order2> {
 
               CheckboxListTile(
 
-                  title: Text('كغم1/2'),
+                  title: Text('صغير'),
                   activeColor: Colors.greenAccent,
                   value: this.checed,
                   onChanged: (val){
@@ -117,7 +117,7 @@ class _order2State extends State<order2> {
                     });
                   }),
               CheckboxListTile(
-                  title: Text('كغم1'),
+                  title: Text('بالجبن+1000د.ع'),
                   activeColor: Colors.greenAccent,
                   value: this.checed2, onChanged: (val){
                 setState(() {
