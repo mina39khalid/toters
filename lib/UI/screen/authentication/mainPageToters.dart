@@ -9,10 +9,20 @@ import 'package:toters_dna/UI/screen/authentication/resturantPage.dart';
 import 'package:toters_dna/UI/screen/authentication/searchPage.dart';
 import 'package:toters_dna/UI/screen/authentication/deliveryPage.dart';
 import 'package:toters_dna/UI/screen/authentication/resturant2Page.dart';
-
-var images=[""];
-var minutes=[""];
+var text_offer=[""];
+var mintext=[""];
+var img=[""];
+var tag_rate=[];
+var tag_resturant=[""];
+var location=[""];
+var test_offer2=[""];
+var mintext2=[""];
 var resturant=[""];
+var imagrest=[""];
+var description=[""];
+var name=[""];
+var type=[""];
+var time=[""];
 var food=[""];
 var note=[""];
 class mypage extends StatefulWidget {
@@ -28,17 +38,17 @@ class _mypageState extends State<mypage> {
       _selectedTab = _SelectedTab.values[i];
     });
   }
-  final List<String> listImages = [
-    'images/img_4.png',
-    'images/img_3.png',
-    'images/img_2.png'
-
-  ];
+  // final List<String> listImages = [
+  //   'images/img_4.png',
+  //   'images/img_3.png',
+  //   'images/img_2.png'
+  //
+  // ];
 
   final String textS = 'فاير فاير';
   final String num = '37 - 27';
   final String mint = 'دقائق';
-  final String img =
+  final String img2 =
       'https://images.pexels.com/photos/2983098/pexels-photo-2983098.jpeg?auto=compress&cs=tinysrgb&w=600';
   final String points = 'اكتساب نقاط';
   final String burg = 'برغر.';
@@ -64,16 +74,27 @@ class _mypageState extends State<mypage> {
     String body =response.body;
 
     List<dynamic> list1=json.decode(body);
-    images.clear();
-    minutes.clear();
-    resturant.clear();
-    food.clear();
-    note.clear();
+     text_offer.clear();
+     mintext.clear();
+     img.clear();
+    tag_rate.clear();
+    tag_resturant.clear();
+    location.clear();
+   test_offer2.clear();
+     mintext2.clear();
+     resturant.clear();
+     food.clear();
+     note.clear();
     for (int i=0; i<list1.length; i++){
       setState(() {
-        images.add("${list1[i]["image"]}");
-        minutes.add("${list1[i]["minutes"]}");
-        resturant.add("${list1[i]["resturant"]}");
+        text_offer.add("${list1[i]["text_offer"]}");
+        mintext.add("${list1[i]["mintext"]}");
+        img.add("${list1[i]["img"]}");
+        tag_rate.add("${list1[i]["tag_rate"]}");
+        tag_resturant.add("${list1[i]["tag_resturant"]}");
+        location.add("${list1[i]["loction"]}");
+        test_offer2.add("${list1[i]["test_offer2"]}");
+        mintext2.add("${list1[i]["mintext2"]}");
         food.add("${list1[i]["food"]}");
         note.add("${list1[i]["note"]}");
 
@@ -81,13 +102,40 @@ class _mypageState extends State<mypage> {
       print(list1);
     }
   }
+
+  Future getData2() async{
+    var url=Uri.parse("http://localhost:4000/rest");
+    Response response= await get(url);
+
+    String body =response.body;
+
+    List<dynamic> list1=json.decode(body);
+    imagrest.clear();
+    time.clear();
+    description.clear();
+    name.clear();
+    type.clear();
+    for (int i=0; i<list1.length; i++){
+      setState(() {
+        imagrest.add("${list1[i]["img"]}");
+        time.add("${list1[i]["d_time"]}");
+        description.add("${list1[i]["description"]}");
+        name.add("${list1[i]["name"]}");
+        type.add("${list1[i]["type"]}");
+
+        
+      });
+      print(list1);
+    }
+  }
   void initState(){
     super.initState();
     getData();
-    }
+    getData2();
+  }
   @override
   Widget build(BuildContext context) {
-    var names = ['dna','mina'];
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -98,7 +146,7 @@ class _mypageState extends State<mypage> {
               width: 2,
             ),
             Icon(
-              Icons.list_outlined,
+              Icons.list,
               color: Colors.grey,
             ),
             SizedBox(
@@ -127,7 +175,7 @@ class _mypageState extends State<mypage> {
                     ),
                     ///database
                     Text(
-                      'بغداد,العراق',
+                      location[0],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -145,7 +193,7 @@ class _mypageState extends State<mypage> {
           scrollDirection: Axis.vertical,
           child: Column(children: [
             Container(
-              height: 800,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Expanded(
                   child: ListView(
@@ -170,7 +218,9 @@ class _mypageState extends State<mypage> {
                       Column(
                         children: <Widget>[
                           CarouselImages(
-                            listImages: listImages,
+                           listImages: [
+                            img[0]
+                           ],
                             height: 195.0,
                             borderRadius: 15.0,
                             cachedNetworkImage: true,
@@ -212,13 +262,13 @@ class _mypageState extends State<mypage> {
                                   children: [
                                     ///database
                                     Text(
-                                      'شنو رأيك اليوم بوجبه مجانية؟',
+                                text_offer[0],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold, fontSize: 18),
                                     ),
                                     ///database
                                     Text(
-                                      'أستبدل نقاطك هسة واحصل على وجبه ومجانيه',
+                                    mintext[0] ,
                                       style: TextStyle(fontSize: 10),
                                     ),
                                   ],
@@ -242,14 +292,14 @@ class _mypageState extends State<mypage> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => burger(
-                                    Images: img,
-                                    Num1: num,
+                                    Images: imagrest[0],
+                                    Num1: time[0],
                                     Point: points,
-                                    Burg: burg,
-                                    Num2: '$doubleNum',
-                                    text2: note[0],
+                                    Burg: type[0],
+                                    Num2: tag_rate[0],
+                                    text2: description[0],
                                     Min: mint,
-                                    text1: resturant[0],
+                                    text1: name[0],
                                   )));
                             },
                             child: Column(
@@ -267,7 +317,7 @@ class _mypageState extends State<mypage> {
                                               height: 200,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
-                                                    image: NetworkImage(images[0]),
+                                                    image: NetworkImage(imagrest[0]),
                                                     fit: BoxFit.cover),
                                                 borderRadius:
                                                 BorderRadius.circular(15),
@@ -309,13 +359,13 @@ class _mypageState extends State<mypage> {
                                                     MainAxisAlignment.center,
                                                     children: [
                                                       Text(
-                                                        num,
+                                                        time[0],
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 10),
                                                       ),
                                                       Text(
-                                                        minutes[0],
+                                                        mint,
                                                         style: TextStyle(
                                                             color: Colors.grey,
                                                             fontSize: 8),
@@ -340,7 +390,7 @@ class _mypageState extends State<mypage> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 260),
                                       child: Text(
-                                        textS,
+                                        name[0],
                                         style: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.bold),
@@ -352,7 +402,7 @@ class _mypageState extends State<mypage> {
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            burg,
+                                            type[0],
                                             style: TextStyle(
                                                 fontSize: 15, color: Colors.black),
                                           ),
@@ -416,7 +466,7 @@ class _mypageState extends State<mypage> {
                                                   Icons.star,
                                                   color: Colors.greenAccent,
                                                 ),
-                                                Text('$doubleNum')
+                                                Text(tag_rate[0])
                                               ],
                                             ),
                                           ),
@@ -427,7 +477,7 @@ class _mypageState extends State<mypage> {
                                       height: 13,
                                     ),
                                     Text(
-                                      text2,
+                                      description[0],
                                       style:
                                       TextStyle(color: Colors.grey, fontSize: 10),
                                     )
@@ -441,13 +491,13 @@ class _mypageState extends State<mypage> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => sweet(
-                                      Imagessweet : Imagessweet1,
-                                      textsweet: textsweet1,
-                                      Numsweet: Numsweet1,
+                                      Imagessweet : imagrest[1],
+                                      textsweet: name[1],
+                                      Numsweet: time[1],
                                       Pointsweet: Pointsweet1,
-                                      sweett: sweet1,
-                                      Numsweet2: '$Numsweet21',
-                                      textsweet2: textsweet21,
+                                      sweett: type[1],
+                                      Numsweet2: tag_rate[0],
+                                      textsweet2: description[1],
                                       Minsweet:Minsweet1,
                                   ),),);
                             },
@@ -467,7 +517,7 @@ class _mypageState extends State<mypage> {
                                               height: 200,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
-                                                    image: NetworkImage(Imagessweet1),
+                                                    image: NetworkImage(imagrest[1]),
                                                     fit: BoxFit.cover),
                                                 borderRadius:
                                                 BorderRadius.circular(15),
@@ -538,7 +588,7 @@ class _mypageState extends State<mypage> {
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
                                             Text(
-                                                textsweet1,
+                                                name[1],
                                                 style: TextStyle(
                                                     fontSize: 17,
                                                     fontWeight: FontWeight.bold),
@@ -551,12 +601,12 @@ class _mypageState extends State<mypage> {
 
                                         children: [
                                           Text(
-                                            sweet1,
+                                            type[1],
                                             style: TextStyle(
                                                 fontSize: 15, color: Colors.black),
                                           ),
                                           Text(
-                                            '\$\$',
+                                            '\$\$\$',
                                             style: TextStyle(
                                                 fontSize: 10,
                                                 color: Colors.grey[600]),
@@ -614,7 +664,7 @@ class _mypageState extends State<mypage> {
                                                   Icons.star,
                                                   color: Colors.greenAccent,
                                                 ),
-                                                Text('$Numsweet21')
+                                                Text(tag_rate[0])
                                               ],
                                             ),
                                           ),
@@ -625,7 +675,7 @@ class _mypageState extends State<mypage> {
                                       height: 13,
                                     ),
                                     Text(
-                                      text2,
+                                      description[1],
                                       style:
                                       TextStyle(color: Colors.grey, fontSize: 10),
                                     )
@@ -655,13 +705,15 @@ class _mypageState extends State<mypage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
+                                    ///database
                                     Text(
-                                      'جديد على توترز',
+                                      test_offer2[0],
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold, fontSize: 18),
                                     ),
+                                    ///database
                                     Text(
-                                      'جرب المطاعم الجديدة المميزة مع مجموعة وجبات رائعة!',
+                                      mintext2[0] ,
                                       style: TextStyle(fontSize: 10),
                                     ),
                                   ],
@@ -685,23 +737,22 @@ class _mypageState extends State<mypage> {
                                         onTap: () {
                                           Navigator.of(context).push(MaterialPageRoute(
                                               builder: (context) => burger(
-                                                Images: img,
-                                                Num1: num,
+                                                Images: imagrest[0],
+                                                Num1: time[0],
                                                 Point: points,
-                                                Burg: burg,
-                                                Num2: '$doubleNum',
-                                                text2: note[0],
+                                                Burg: type[0],
+                                                Num2: tag_rate[0],
+                                                text2: description[0],
                                                 Min: mint,
-                                                text1: resturant[0],
+                                                text1: name[0],
                                               )));
                                         },
                                         child: Column(
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Stack(
                                                       clipBehavior: Clip.none,
@@ -711,7 +762,7 @@ class _mypageState extends State<mypage> {
                                                           height: 200,
                                                           decoration: BoxDecoration(
                                                             image: DecorationImage(
-                                                                image: NetworkImage(images[0]),
+                                                                image: NetworkImage(imagrest[0]),
                                                                 fit: BoxFit.cover),
                                                             borderRadius:
                                                             BorderRadius.circular(15),
@@ -753,13 +804,13 @@ class _mypageState extends State<mypage> {
                                                                 MainAxisAlignment.center,
                                                                 children: [
                                                                   Text(
-                                                                    num,
+                                                                    time[0],
                                                                     style: TextStyle(
                                                                         color: Colors.black,
                                                                         fontSize: 10),
                                                                   ),
                                                                   Text(
-                                                                    minutes[0],
+                                                                    mint,
                                                                     style: TextStyle(
                                                                         color: Colors.grey,
                                                                         fontSize: 8),
@@ -784,7 +835,7 @@ class _mypageState extends State<mypage> {
                                                 Padding(
                                                   padding: const EdgeInsets.only(left: 260),
                                                   child: Text(
-                                                    textS,
+                                                    name[0],
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight: FontWeight.bold),
@@ -796,7 +847,7 @@ class _mypageState extends State<mypage> {
                                                     mainAxisAlignment: MainAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        burg,
+                                                        type[0],
                                                         style: TextStyle(
                                                             fontSize: 15, color: Colors.black),
                                                       ),
@@ -860,7 +911,7 @@ class _mypageState extends State<mypage> {
                                                               Icons.star,
                                                               color: Colors.greenAccent,
                                                             ),
-                                                            Text('$doubleNum')
+                                                            Text(tag_rate[0])
                                                           ],
                                                         ),
                                                       ),
@@ -871,7 +922,7 @@ class _mypageState extends State<mypage> {
                                                   height: 13,
                                                 ),
                                                 Text(
-                                                  text2,
+                                                  description[0],
                                                   style:
                                                   TextStyle(color: Colors.grey, fontSize: 10),
                                                 )
@@ -885,13 +936,13 @@ class _mypageState extends State<mypage> {
                                         onTap: () {
                                           Navigator.of(context).push(MaterialPageRoute(
                                             builder: (context) => sweet(
-                                              Imagessweet : Imagessweet1,
-                                              textsweet: textsweet1,
-                                              Numsweet: Numsweet1,
+                                              Imagessweet : imagrest[1],
+                                              textsweet: name[1],
+                                              Numsweet: time[1],
                                               Pointsweet: Pointsweet1,
-                                              sweett: sweet1,
-                                              Numsweet2: '$Numsweet21',
-                                              textsweet2: textsweet21,
+                                              sweett: type[1],
+                                              Numsweet2: tag_rate[1],
+                                              textsweet2: description[1],
                                               Minsweet:Minsweet1,
                                             ),),);
                                         },
@@ -899,10 +950,9 @@ class _mypageState extends State<mypage> {
                                         child: Column(
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
                                                     Stack(
                                                       clipBehavior: Clip.none,
@@ -912,7 +962,7 @@ class _mypageState extends State<mypage> {
                                                           height: 200,
                                                           decoration: BoxDecoration(
                                                             image: DecorationImage(
-                                                                image: NetworkImage(Imagessweet1),
+                                                                image: NetworkImage(imagrest[1]),
                                                                 fit: BoxFit.cover),
                                                             borderRadius:
                                                             BorderRadius.circular(15),
@@ -983,7 +1033,7 @@ class _mypageState extends State<mypage> {
                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                   children: [
                                                     Text(
-                                                      textsweet1,
+                                                      name[1],
                                                       style: TextStyle(
                                                           fontSize: 17,
                                                           fontWeight: FontWeight.bold),
@@ -993,14 +1043,15 @@ class _mypageState extends State<mypage> {
                                                 ),
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.end,
+
                                                   children: [
                                                     Text(
-                                                      sweet1,
+                                                      type[1],
                                                       style: TextStyle(
                                                           fontSize: 15, color: Colors.black),
                                                     ),
                                                     Text(
-                                                      '\$\$',
+                                                      '\$\$\$',
                                                       style: TextStyle(
                                                           fontSize: 10,
                                                           color: Colors.grey[600]),
@@ -1058,7 +1109,7 @@ class _mypageState extends State<mypage> {
                                                               Icons.star,
                                                               color: Colors.greenAccent,
                                                             ),
-                                                            Text('$Numsweet21')
+                                                            Text(tag_rate[0])
                                                           ],
                                                         ),
                                                       ),
@@ -1069,7 +1120,7 @@ class _mypageState extends State<mypage> {
                                                   height: 13,
                                                 ),
                                                 Text(
-                                                  text2,
+                                                  description[1],
                                                   style:
                                                   TextStyle(color: Colors.grey, fontSize: 10),
                                                 )
@@ -1078,11 +1129,10 @@ class _mypageState extends State<mypage> {
                                           ],
                                         ),
                                       ),SizedBox(width: 10,),
-                                    ],);}
-                              ),
+                                    ],);}),
                             ),
                           ),
-                          SizedBox(height: 160,)
+SizedBox(height: 100,)
                         ],
                       ),
                     ],
