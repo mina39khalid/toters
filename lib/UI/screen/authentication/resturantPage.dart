@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
+import 'package:toters_dna/UI/screen/authentication/orderPage.dart';
 
 class burger extends StatefulWidget {
   final String Images;
@@ -257,9 +258,89 @@ class _burgerState extends State<burger> {
                 ),
 
                 Text('"لفة جبيره و مشبعه والطعم طيب جداً راح تحس اكو اختلاف عن باقي مطاعم البركر "',style: TextStyle(fontSize: 8,color: Colors.grey),),
-              ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 5,bottom: 5),
+                  child: Container(width: 370,height: 1,color: Colors.grey[400],),
+                ),
+                 Padding(
+                   padding: const EdgeInsets.only(right: 15),
+                   child: Row( mainAxisAlignment: MainAxisAlignment.end,
+                     children: [
+                       Text('شائع',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                     ],
+                   ),
+                 ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => order()));
+          },
+          child:
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage('https://images.pexels.com/photos/1301373/pexels-photo-1301373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Column(
+                        children: [
+                          Text('فنكر',style: TextStyle(fontSize: 20),),
+                          Text('د.ع2000',style: TextStyle(color: Colors.greenAccent),),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 10,),
+                Column(
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage('https://images.pexels.com/photos/1301373/pexels-photo-1301373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Column(
+                        children: [
+                          Text('فنكر',style: TextStyle(fontSize: 20),),
+                          Text('د.ع2000',style: TextStyle(color: Colors.greenAccent),),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
 
+              ],
             ),
+          )
+        )
+
+           ] ),
+
+
           ],
         ),
       ),

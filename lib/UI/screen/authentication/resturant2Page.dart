@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:toters_dna/UI/screen/authentication/resturant2Page.dart';
+import 'package:toters_dna/UI/screen/authentication/order2.dart';
 
 class sweet extends StatefulWidget {
    final String Imagessweet;
@@ -253,6 +254,56 @@ class _sweetState extends State<sweet> {
               ],
 
             ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: Row( mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('شائع',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                ],
+              ),
+            ),
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => order2()));
+                },
+                child:
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 180,
+                            height: 130,
+                            decoration: BoxDecoration(
+                              color: Colors.pink,
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage('https://images.pexels.com/photos/1301373/pexels-photo-1301373.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Text('فنكر',style: TextStyle(fontSize: 20),),
+                                Text('د.ع2000',style: TextStyle(color: Colors.greenAccent),),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+
+                    ],
+                  ),
+                )
+            )
           ],
         ),
       ),

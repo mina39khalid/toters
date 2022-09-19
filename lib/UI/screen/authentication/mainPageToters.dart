@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_images/carousel_images.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
@@ -8,7 +10,11 @@ import 'package:toters_dna/UI/screen/authentication/searchPage.dart';
 import 'package:toters_dna/UI/screen/authentication/deliveryPage.dart';
 import 'package:toters_dna/UI/screen/authentication/resturant2Page.dart';
 
-
+var images=[""];
+var minutes=[""];
+var resturant=[""];
+var food=[""];
+var note=[""];
 class mypage extends StatefulWidget {
   @override
   State<mypage> createState() => _mypageState();
@@ -51,6 +57,34 @@ class _mypageState extends State<mypage> {
   final String textsweet21 =
       'نقدم ألذ سندويشات البركر المميزة مع الصلصات ألامريكية والغريبه الخاصه';
 
+  Future getData() async{
+    var url=Uri.parse("http://localhost:4000/main");
+    Response response= await get(url);
+
+    String body =response.body;
+
+    List<dynamic> list1=json.decode(body);
+    images.clear();
+    minutes.clear();
+    resturant.clear();
+    food.clear();
+    note.clear();
+    for (int i=0; i<list1.length; i++){
+      setState(() {
+        images.add("${list1[i]["image"]}");
+        minutes.add("${list1[i]["minutes"]}");
+        resturant.add("${list1[i]["resturant"]}");
+        food.add("${list1[i]["food"]}");
+        note.add("${list1[i]["note"]}");
+
+      });
+      print(list1);
+    }
+  }
+  void initState(){
+    super.initState();
+    getData();
+    }
   @override
   Widget build(BuildContext context) {
     var names = ['dna','mina'];
@@ -91,6 +125,7 @@ class _mypageState extends State<mypage> {
                       'توصيل الى',
                       style: TextStyle(color: Colors.black, fontSize: 10),
                     ),
+                    ///database
                     Text(
                       'بغداد,العراق',
                       style: TextStyle(
@@ -175,11 +210,13 @@ class _mypageState extends State<mypage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
+                                    ///database
                                     Text(
                                       'شنو رأيك اليوم بوجبه مجانية؟',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold, fontSize: 18),
                                     ),
+                                    ///database
                                     Text(
                                       'أستبدل نقاطك هسة واحصل على وجبه ومجانيه',
                                       style: TextStyle(fontSize: 10),
@@ -206,22 +243,21 @@ class _mypageState extends State<mypage> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => burger(
                                     Images: img,
-                                    text1: textS,
                                     Num1: num,
                                     Point: points,
                                     Burg: burg,
                                     Num2: '$doubleNum',
-                                    text2: text2,
+                                    text2: note[0],
                                     Min: mint,
+                                    text1: resturant[0],
                                   )));
                             },
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Stack(
                                           clipBehavior: Clip.none,
@@ -231,7 +267,7 @@ class _mypageState extends State<mypage> {
                                               height: 200,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
-                                                    image: NetworkImage(img),
+                                                    image: NetworkImage(images[0]),
                                                     fit: BoxFit.cover),
                                                 borderRadius:
                                                 BorderRadius.circular(15),
@@ -279,7 +315,7 @@ class _mypageState extends State<mypage> {
                                                             fontSize: 10),
                                                       ),
                                                       Text(
-                                                        mint,
+                                                        minutes[0],
                                                         style: TextStyle(
                                                             color: Colors.grey,
                                                             fontSize: 8),
@@ -422,7 +458,6 @@ class _mypageState extends State<mypage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Stack(
                                           clipBehavior: Clip.none,
@@ -605,7 +640,451 @@ class _mypageState extends State<mypage> {
 
                         ],
                       ),
-                     SizedBox(height: 200,)
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: Colors.greenAccent,
+                                  size: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'جديد على توترز',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    Text(
+                                      'جرب المطاعم الجديدة المميزة مع مجموعة وجبات رائعة!',
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: MediaQuery.of(context).size.width,
+                              child: ListView.builder( scrollDirection: Axis.horizontal,
+                                  itemCount: 3,
+                                  itemBuilder: (BuildContext context ,int index)
+                                  { return Row( mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => burger(
+                                                Images: img,
+                                                Num1: num,
+                                                Point: points,
+                                                Burg: burg,
+                                                Num2: '$doubleNum',
+                                                text2: note[0],
+                                                Min: mint,
+                                                text1: resturant[0],
+                                              )));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        Container(
+                                                          width: 350,
+                                                          height: 200,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: NetworkImage(images[0]),
+                                                                fit: BoxFit.cover),
+                                                            borderRadius:
+                                                            BorderRadius.circular(15),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          top: -5.0,
+                                                          right: 270.0,
+                                                          left: 10.0,
+                                                          child: Container(
+                                                              width: 60,
+                                                              height: 70,
+                                                              child: Icon(
+                                                                Icons.favorite_outline_sharp,
+                                                                size: 35,
+                                                                color: Colors.white,
+                                                              )),
+                                                        ),
+                                                        Positioned(
+                                                          top: 160,
+                                                          left: 20,
+                                                          child: Container(
+                                                              width: 80,
+                                                              height: 50,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius.circular(6),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      spreadRadius: 1,
+                                                                      blurRadius: 10,
+                                                                      color: Colors.black12,
+                                                                      offset: Offset(0, 1)),
+                                                                ],
+                                                                color: Colors.white,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                children: [
+                                                                  Text(
+                                                                    num,
+                                                                    style: TextStyle(
+                                                                        color: Colors.black,
+                                                                        fontSize: 10),
+                                                                  ),
+                                                                  Text(
+                                                                    minutes[0],
+                                                                    style: TextStyle(
+                                                                        color: Colors.grey,
+                                                                        fontSize: 8),
+                                                                  ),
+                                                                ],
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Column(
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 260),
+                                                  child: Text(
+                                                    textS,
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(right: 30),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        burg,
+                                                        style: TextStyle(
+                                                            fontSize: 15, color: Colors.black),
+                                                      ),
+                                                      Text(
+                                                        '\$\$',
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: Colors.grey[600]),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Container(
+                                                      width: 110,
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.blueGrey[100],
+                                                          borderRadius: BorderRadius.circular(8)),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                points,
+                                                                style: TextStyle(
+                                                                    color: Colors.blueAccent,
+                                                                    fontSize: 10),
+                                                              ),
+                                                              Icon(
+                                                                Icons.plus_one,
+                                                                color: Colors.blueAccent,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          left: 10, right: 25),
+                                                      child: Container(
+                                                        width: 70,
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.grey[200],
+                                                            borderRadius:
+                                                            BorderRadius.circular(10)),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                          children: [
+                                                            Icon(
+                                                              Icons.star,
+                                                              color: Colors.greenAccent,
+                                                            ),
+                                                            Text('$doubleNum')
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 13,
+                                                ),
+                                                Text(
+                                                  text2,
+                                                  style:
+                                                  TextStyle(color: Colors.grey, fontSize: 10),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(width: 10,),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => sweet(
+                                              Imagessweet : Imagessweet1,
+                                              textsweet: textsweet1,
+                                              Numsweet: Numsweet1,
+                                              Pointsweet: Pointsweet1,
+                                              sweett: sweet1,
+                                              Numsweet2: '$Numsweet21',
+                                              textsweet2: textsweet21,
+                                              Minsweet:Minsweet1,
+                                            ),),);
+                                        },
+
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  children: [
+                                                    Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        Container(
+                                                          width: 350,
+                                                          height: 200,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: NetworkImage(Imagessweet1),
+                                                                fit: BoxFit.cover),
+                                                            borderRadius:
+                                                            BorderRadius.circular(15),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          top: -5.0,
+                                                          right: 270.0,
+                                                          left: 10.0,
+                                                          child: Container(
+                                                              width: 60,
+                                                              height: 70,
+                                                              child: Icon(
+                                                                Icons.favorite_outline_sharp,
+                                                                size: 35,
+                                                                color: Colors.white,
+                                                              )),
+                                                        ),
+                                                        Positioned(
+                                                          top: 160,
+                                                          left: 20,
+                                                          child: Container(
+                                                              width: 80,
+                                                              height: 50,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                BorderRadius.circular(6),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      spreadRadius: 1,
+                                                                      blurRadius: 10,
+                                                                      color: Colors.black12,
+                                                                      offset: Offset(0, 1)),
+                                                                ],
+                                                                color: Colors.white,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                                children: [
+                                                                  Text(
+                                                                    Numsweet1,
+                                                                    style: TextStyle(
+                                                                        color: Colors.black,
+                                                                        fontSize: 10),
+                                                                  ),
+                                                                  Text(
+                                                                    Minsweet1,
+                                                                    style: TextStyle(
+                                                                        color: Colors.grey,
+                                                                        fontSize: 8),
+                                                                  ),
+                                                                ],
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      textsweet1,
+                                                      style: TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight: FontWeight.bold),
+
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      sweet1,
+                                                      style: TextStyle(
+                                                          fontSize: 15, color: Colors.black),
+                                                    ),
+                                                    Text(
+                                                      '\$\$',
+                                                      style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: Colors.grey[600]),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  children: [
+                                                    Container(
+                                                      width: 110,
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.blueGrey[100],
+                                                          borderRadius: BorderRadius.circular(8)),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                Pointsweet1,
+                                                                style: TextStyle(
+                                                                    color: Colors.blueAccent,
+                                                                    fontSize: 10),
+                                                              ),
+                                                              Icon(
+                                                                Icons.plus_one,
+                                                                color: Colors.blueAccent,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          left: 10, right: 25),
+                                                      child: Container(
+                                                        width: 70,
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.grey[200],
+                                                            borderRadius:
+                                                            BorderRadius.circular(10)),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                          children: [
+                                                            Icon(
+                                                              Icons.star,
+                                                              color: Colors.greenAccent,
+                                                            ),
+                                                            Text('$Numsweet21')
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 13,
+                                                ),
+                                                Text(
+                                                  text2,
+                                                  style:
+                                                  TextStyle(color: Colors.grey, fontSize: 10),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),SizedBox(width: 10,),
+                                    ],);}
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 160,)
+                        ],
+                      ),
                     ],
                   )),
             ),
